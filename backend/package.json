@@ -1,0 +1,28 @@
+{
+  "name": "design-hunter-apparel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.0",
+    "body-parser": "^1.17.2",
+    "chance-cli": "^1.0.7",
+    "cors": "^2.8.4",
+    "express": "^4.15.3",
+    "ionic": "^3.19.1",
+    "jsonwebtoken": "^8.3.0",
+    "node-bigcommerce": "^3.0.0",
+    "request": "^2.81.0",
+    "underscore": "^1.9.0",
+    "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "standard": "^11.0.1"
+  }
+}
