@@ -1,0 +1,22 @@
+<ion-content>
+  <div class="user-input">
+    <ion-item>
+      <ion-label position="stacked" required="true">Username</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked" required="true">Password</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+  </div>
+  <ion-grid class="user-buttons" text-center>
+    <ion-row>
+      <ion-col>
+        <ion-button color="primary" large expand="full" (click)="login()">Login</ion-button>
+      </ion-col>
+      <ion-col class="user-button">
+        <ion-button color="primary" large expand="full">Register</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
