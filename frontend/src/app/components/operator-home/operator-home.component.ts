@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faWpforms } from '@fortawesome/free-brands-svg-icons';
 import { faEdit, faUtensils, faBook } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-operator-home',
@@ -13,8 +14,12 @@ export class OperatorHomeComponent implements OnInit {
   faUtensils = faUtensils;
   faBook = faBook;
 
-  constructor() { }
+  constructor(public router: Router) { }
 
   ngOnInit() { }
+
+  eBIBO() {
+    this.router.navigateByUrl('/ebibo');
+  }
 
 }
