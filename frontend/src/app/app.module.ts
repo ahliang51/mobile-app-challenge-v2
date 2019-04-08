@@ -12,13 +12,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faWpforms } from '@fortawesome/free-brands-svg-icons';
+import { OperatorHomeComponent } from './components/operator-home/operator-home.component';
+import { OperatorHomeComponentsModule } from './components/operator-home/operator-home.module';
 
 library.add(faWpforms);
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FontAwesomeModule],
+  entryComponents: [OperatorHomeComponent],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FontAwesomeModule, OperatorHomeComponentsModule],
   providers: [
     StatusBar,
     SplashScreen,

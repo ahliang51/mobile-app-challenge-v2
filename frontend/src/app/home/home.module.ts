@@ -3,16 +3,16 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { HomePage } from './home.page';
+import { OperatorHomeComponentsModule } from '../components/operator-home/operator-home.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FontAwesomeModule,
+    OperatorHomeComponentsModule,
     RouterModule.forChild([
       {
         path: '',
