@@ -1,5 +1,7 @@
 {
   "name": "RSAF Mobile App",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
