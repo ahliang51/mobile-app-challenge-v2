@@ -1,3 +1,21 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu contentId="content" side="start">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          eCompanion
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="false" *ngFor="let page of appMenu">
+          <ion-item [routerDirection]="root" [routerLink]="[page.url]">
+            <ion-label>{{page.title}}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet main id="content"></ion-router-outlet>
 </ion-app>

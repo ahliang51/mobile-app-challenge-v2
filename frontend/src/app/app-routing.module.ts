@@ -5,7 +5,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'ebibo', loadChildren: './ebibo/ebibo.module#EbiboPageModule' },
+  { path: 'e-bibo', loadChildren: './e-bibo/e-bibo.module#EbiboPageModule' },
+  { path: 'e-application', loadChildren: './e-application/e-application.module#EApplicationPageModule' },
 ];
 
 @NgModule({

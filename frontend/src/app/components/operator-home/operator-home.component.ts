@@ -19,7 +19,11 @@ export class OperatorHomeComponent implements OnInit {
   ngOnInit() { }
 
   eBIBO() {
-    this.router.navigateByUrl('/ebibo');
+    this.router.navigateByUrl('/e-bibo');
+  }
+
+  eApplication() {
+    this.router.navigateByUrl('/e-application');
   }
 
 }

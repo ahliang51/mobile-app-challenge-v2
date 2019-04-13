@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
+import { EbiboPage } from './e-bibo.page';
 
-import { EbiboPage } from './ebibo.page';
 
 const routes: Routes = [
   {
