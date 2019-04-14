@@ -26,4 +26,8 @@ export class OperatorHomeComponent implements OnInit {
     this.router.navigateByUrl('/e-application');
   }
 
+  eParadeState() {
+    this.router.navigateByUrl('/e-parade-state');
+  }
+
 }

@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-title>eParadeState</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let personnel of personnelArray">
+      <ion-label text-wrap>
+        <ion-text>
+          <h3>{{personnel.name}}</h3>
+        </ion-text>
+        <ion-text>
+          <p>{{personnel.remarks}}</p>
+        </ion-text>
+      </ion-label>
+      <ion-text slot="end">
+        <fa-icon [icon]="faCheckCircle" size="2x" *ngIf="personnel.present" color="primary"></fa-icon>
+        <fa-icon [icon]="faTimesCircle" size="2x" *ngIf="!personnel.present"></fa-icon>
+      </ion-text>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-toolbar>
+    <ion-item color="primary">
+      <ion-label>Select Date</ion-label>
+      <ion-datetime display-format="DD/MM/YYYY" min="2019" picker-format="DD MMM YYYY"></ion-datetime>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

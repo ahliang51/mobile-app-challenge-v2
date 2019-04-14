@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'e-bibo', loadChildren: './e-bibo/e-bibo.module#EbiboPageModule' },
   { path: 'e-application', loadChildren: './e-application/e-application.module#EApplicationPageModule' },
+  { path: 'e-parade-state', loadChildren: './e-parade-state/e-parade-state.module#EParadeStatePageModule' },
 ];
 
 @NgModule({
