@@ -9,14 +9,35 @@
       <ion-input></ion-input>
     </ion-item>
   </div>
-  <ion-grid class="user-buttons" text-center>
-    <ion-row>
-      <ion-col>
-        <ion-button color="primary" large expand="full" (click)="login()">Login</ion-button>
-      </ion-col>
-      <ion-col class="user-button">
-        <ion-button color="primary" large expand="full">Register</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-list>
+    <ion-radio-group no-lines>
+      <ion-list-header>
+        <ion-label>Select Appointment</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Commander</ion-label>
+        <ion-radio slot="start" value="commander" checked></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Operator</ion-label>
+        <ion-radio slot="start" value="operator"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
 </ion-content>
+
+<ion-footer no-border>
+  <ion-toolbar>
+    <ion-grid text-center>
+      <ion-row>
+        <ion-col>
+          <ion-button color="primary" large expand="full" (click)="login()">Login</ion-button>
+        </ion-col>
+        <ion-col class="user-button">
+          <ion-button color="primary" large expand="full">Register</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

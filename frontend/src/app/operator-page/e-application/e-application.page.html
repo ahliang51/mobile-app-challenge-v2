@@ -14,11 +14,19 @@
   </ion-item>
   <ion-item>
     <ion-label>Start Date</ion-label>
-    <ion-datetime display-format="DD/MM/YYYY" min="2019" picker-format="DD MMM YYYY"></ion-datetime>
+    <ion-datetime display-format="DD/MM/YYYY" min="2019" picker-format="DD MMM YYYY" [(ngModel)]="startDate">
+    </ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label>End Date</ion-label>
-    <ion-datetime display-format="DD/MM/YYYY" min="2019" picker-format="DD MMM YYYY"></ion-datetime>
+    <ion-datetime display-format="DD/MM/YYYY" min="2019" picker-format="DD MMM YYYY" [(ngModel)]="endDate">
+    </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label text-wrap>Approving Commander</ion-label>
+    <ion-select value="commanderOptions[0]" [interfaceOptions]="approvingCommanderOptions" interface="action-sheet">
+      <ion-select-option *ngFor="let name of commanderOptions" [value]="name">{{name}}</ion-select-option>
+    </ion-select>
   </ion-item>
   <ion-item>
     <ion-label>Number of Days</ion-label>

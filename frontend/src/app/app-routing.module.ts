@@ -5,8 +5,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'e-bibo', loadChildren: './e-bibo/e-bibo.module#EbiboPageModule' },
-  { path: 'e-application', loadChildren: './e-application/e-application.module#EApplicationPageModule' },
+  { path: 'e-bibo', loadChildren: './operator-page/e-bibo/e-bibo.module#EbiboPageModule' },
+  { path: 'e-application', loadChildren: './operator-page/e-application/e-application.module#EApplicationPageModule' },
   { path: 'e-parade-state', loadChildren: './e-parade-state/e-parade-state.module#EParadeStatePageModule' },
 ];
 

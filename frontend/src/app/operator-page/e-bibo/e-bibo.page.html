@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-title text-center>eBIBO</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div class="map-wrapper">
+    <div id="map_center">
+      <fa-icon [icon]="faMapMarkerAlt" size="2x" *ngIf="showMapMarker"></fa-icon>
+    </div>
+    <div #map id="map"></div>
+  </div>
+  <!-- <div id="address">
+    <span>{{address}}</span>
+  </div> -->
+</ion-content>
+<ion-footer no-border>
+  <ion-toolbar>
+    <ion-button expand="block" fill="solid" class="submit">Book In</ion-button>
+  </ion-toolbar>
+</ion-footer>
