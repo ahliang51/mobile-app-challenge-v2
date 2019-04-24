@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-title>eRation</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item no-lines>
+    <ion-label text-center color="primary" class="week-number">
+      Indentation of Ration Week {{nextWeekNumber}}
+    </ion-label>
+  </ion-item>
+  <ion-item *ngFor="let day of daysArray; let i = index">
+    <ion-grid>
+      <ion-row justify-content-center>
+        <ion-label text-wrap>
+          {{day}}
+        </ion-label>
+      </ion-row>
+      <ion-row text-center>
+        <ion-col>
+          <ion-label>Breakfast</ion-label>
+          <ion-checkbox value="breakfast" checked></ion-checkbox>
+        </ion-col>
+        <ion-col>
+          <ion-label>Lunch</ion-label>
+          <ion-checkbox value="lunch" checked>Lunch</ion-checkbox>
+        </ion-col>
+        <ion-col>
+          <ion-label>Dinner</ion-label>
+          <ion-checkbox value="dinner" checked>Dinner</ion-checkbox>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-toolbar>
+    <ion-button expand="block" fill="solid" class="submit">Submit Ration</ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -30,4 +30,8 @@ export class OperatorHomeComponent implements OnInit {
     this.router.navigateByUrl('/e-parade-state');
   }
 
+  eRation() {
+    this.router.navigateByUrl('/e-ration');
+  }
+
 }

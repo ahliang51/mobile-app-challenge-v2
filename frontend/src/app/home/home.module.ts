@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import { OperatorHomeComponentsModule } from '../components/operator-home/operator-home.module';
+import { CommanderHomeComponentsModule } from '../components/commander-home/commander-home.module';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { OperatorHomeComponentsModule } from '../components/operator-home/operat
     FormsModule,
     IonicModule,
     OperatorHomeComponentsModule,
+    CommanderHomeComponentsModule,
     RouterModule.forChild([
       {
         path: '',
