@@ -10,17 +10,22 @@ export class EParadeStatePage implements OnInit {
 
   faCheckCircle = faCheckCircle;
   faTimesCircle = faTimesCircle;
+  date;
 
-  personnelArray = [
-    { name: 'LTA Hosehbo', present: false, remarks: 'On Off' },
-    { name: 'LTA Hosehliao', present: true, remarks: '' },
-    { name: 'LTA Hosehkao', present: true, remarks: '' },
-    { name: 'LTA Hosehboliao', present: false, remarks: 'On MA' }
-  ];
+  personnelArray = [];
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onDateChanged() {
+    this.personnelArray = [
+      { name: 'LTA Hosehbo', present: false, remarks: 'On Off' },
+      { name: 'LTA Hosehliao', present: true, remarks: '' },
+      { name: 'LTA Hosehkao', present: true, remarks: '' },
+      { name: 'LTA Hosehboliao', present: false, remarks: 'On MA' }
+    ];
   }
 
 }

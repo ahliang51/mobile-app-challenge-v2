@@ -1,64 +1,40 @@
 'use strict'
-let express = require('express')
-let bodyParser = require('body-parser')
-let BigCommerce = require('node-bigcommerce')
-let config = require('./config/config')
-let cors = require('cors')
-let jwt = require('jsonwebtoken')
+const express = require('express')
+const bodyParser = require('body-parser')
+const MongoClient = require('mongodb').MongoClient
+const assert = require('assert')
 let db
 
 // Initialisation
 let app = express()
-let bigCommerce = new BigCommerce({
-  logLevel: config.bigCommerceLogLevel,
-  clientId: config.bigCommerceClientId,
-  accessToken: config.bigCommerceAccessToken,
-  responseType: config.bigCommerceResponseType,
-  storeHash: config.bigCommerceStoreHash
+// Connection URL
+const url = 'mongodb://mobile-api:Shengliang51@ds135305.mlab.com:35305/rsaf-mobile-app-challenge'
+// Database Name
+const dbName = 'rsaf-mobile-app-challenge'
+// Create a new MongoClient
+const client = new MongoClient(url, {
+  useNewUrlParser: true
 })
 
-let bigCommerceV3 = new BigCommerce({
-  logLevel: config.bigCommerceLogLevel,
-  clientId: config.bigCommerceClientId,
-  accessToken: config.bigCommerceAccessToken,
-  responseType: config.bigCommerceResponseType,
-  storeHash: config.bigCommerceStoreHash,
-  apiVersion: 'v3'
+client.connect(function (err, client) {
+  assert.strictEqual(null, err)
+  console.log('Connected successfully to server')
+  db = client.db(dbName)
 })
-
-// Import Routes
-let auth = require('./routes/auth')
-let product = require('./routes/product')
-let profile = require('./routes/profile')
-let cart = require('./routes/cart')
-let store = require('./routes/store')
-
 
 // Specifies the port number
 let port = process.env.PORT || 3000
-
 // Body Parser Middleware
 app.use(bodyParser.json())
-
-// CORS
-app.use(cors())
-
 app.use(function (req, res, next) {
   req.db = db
-  req.bigCommerce = bigCommerce
-  req.bigCommerceV3 = bigCommerceV3
-  req.jwt = jwt
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
   next()
 })
 
+// // Import Routes
+let addressBook = require('./routes/address-book')
 // Routes
-app.use('/auth', auth)
-app.use('/product', product)
-app.use('/profile', profile)
-app.use('/cart', cart)
-app.use('/store', store)
+app.use('/address-book', addressBook)
 
 // Start the server only the connection to database is successful
 app.listen(port, () => {

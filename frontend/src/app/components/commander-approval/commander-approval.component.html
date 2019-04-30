@@ -1,0 +1,19 @@
+<ion-list>
+ <ion-item *ngFor="let personnel of personnelArray">
+  <ion-label text-wrap>
+   <ion-text>
+    <h3>{{personnel.name}}</h3>
+   </ion-text>
+   <ion-text>
+    <p>Date From : {{personnel.dateFrom}}</p>
+   </ion-text>
+   <ion-text>
+    <p>Date To : {{personnel.dateTo}}</p>
+   </ion-text>
+   <ion-text>
+    <p>Number of Days : {{personnel.numberOfDays}}</p>
+   </ion-text>
+  </ion-label>
+  <ion-button slot="end" shape="block" fill="outline">Approve</ion-button>
+ </ion-item>
+</ion-list>

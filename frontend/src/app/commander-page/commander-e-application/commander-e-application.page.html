@@ -8,19 +8,20 @@
 </ion-header>
 
 <ion-content>
-  <ion-segment [(ngModel)]="segment" color="primary">
+  <ion-segment [(ngModel)]="segment">
     <ion-segment-button value="approval" class="segment-button">
       <ion-label>
         <fa-icon [icon]="faUserFriends"></fa-icon>
         Approve
       </ion-label>
     </ion-segment-button>
-    <ion-segment-button value="apply">
+    <ion-segment-button value="grant">
       <ion-label>
         <fa-icon [icon]="faEdit"></fa-icon>
-        Apply
+        Grant
       </ion-label>
     </ion-segment-button>
   </ion-segment>
-  <app-e-application *ngIf="segment == 'apply'"></app-e-application>
+  <app-commander-approval *ngIf="segment == 'approval' "></app-commander-approval>
+  <app-commander-grant *ngIf="segment == 'grant' "></app-commander-grant>
 </ion-content>

@@ -1,0 +1,16 @@
+<ion-item>
+  <ion-label text-wrap>Select Operator</ion-label>
+  <ion-select value="operatorArray[0]" [interfaceOptions]="operatorConfiguration" interface="action-sheet">
+    <ion-select-option *ngFor="let name of operatorArray" [value]="name">{{name}}</ion-select-option>
+  </ion-select>
+</ion-item>
+<ion-item>
+  <ion-label>Number of Days</ion-label>
+  <ion-select value="0.5" [interfaceOptions]="customActionSheetOptions" interface="action-sheet">
+    <ion-select-option value="0.5">0.5</ion-select-option>
+    <ion-select-option value="1">1</ion-select-option>
+    <ion-select-option value="1.5">1.5</ion-select-option>
+    <ion-select-option value="2">2</ion-select-option>
+  </ion-select>
+</ion-item>
+<ion-button fill="solid" expand="full">Submit</ion-button>

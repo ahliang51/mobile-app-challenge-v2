@@ -22,4 +22,12 @@ export class CommanderHomeComponent implements OnInit {
     this.router.navigateByUrl('/commander-e-application');
   }
 
+  eParadeState() {
+    this.router.navigateByUrl('/e-parade-state');
+  }
+
+  eRation() {
+    this.router.navigateByUrl('/e-ration');
+  }
+
 }

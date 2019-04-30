@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'e-ration', loadChildren: './e-ration/e-ration.module#ERationPageModule' },
   // tslint:disable-next-line:max-line-length
   { path: 'commander-e-application', loadChildren: './commander-page/commander-e-application/commander-e-application.module#CommanderEApplicationPageModule' },
+  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
 ];
 
 @NgModule({

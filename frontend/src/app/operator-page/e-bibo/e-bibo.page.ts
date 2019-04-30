@@ -92,7 +92,7 @@ export class EbiboPage implements OnInit {
       const latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
       const mapOptions = {
         center: latLng,
-        zoom: 18,
+        zoom: 16,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
 

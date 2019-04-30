@@ -2,17 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { EApplicationComponent } from './e-application.component';
-import { FormsModule } from '@angular/forms';
+import { CommanderGrantComponent } from './commander-grant.component';
+
+
 
 @NgModule({
- declarations: [EApplicationComponent],
+ declarations: [CommanderGrantComponent],
  imports: [
   CommonModule,
   IonicModule,
-  FontAwesomeModule,
-  FormsModule
+  FontAwesomeModule
  ],
- exports: [EApplicationComponent]
+ exports: [CommanderGrantComponent]
 })
-export class EApplicationComponentModule { }
+export class CommanderGrantComponentsModule { }

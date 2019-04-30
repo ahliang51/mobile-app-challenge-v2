@@ -7,7 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { CommanderEApplicationPage } from './commander-e-application.page';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { EApplicationComponentModule } from 'src/app/components/e-application/e-application.module';
+import { CommanderApprovalComponentsModule } from '../../components/commander-approval/commander-approval.module';
+import { CommanderGrantComponentsModule } from '../../components/commander-grant/commander-grant.module';
 
 
 
@@ -25,7 +26,8 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     FontAwesomeModule,
-    EApplicationComponentModule
+    CommanderApprovalComponentsModule,
+    CommanderGrantComponentsModule
   ],
   declarations: [CommanderEApplicationPage]
 })
