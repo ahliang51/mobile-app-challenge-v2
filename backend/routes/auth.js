@@ -2,78 +2,16 @@
 // Import
 let express = require('express')
 let router = express.Router()
-let async = require('async')
-let config = require('../config/config')
-// db, jwt, bigCommerce, bigCommerceV3;
+let db
 
 // Writing for sign up
 router.post('/sign-up', (req, res, next) => {
-  let bigCommerce = req.bigCommerce
-  let jwt = req.jwt;
-
-  async.waterfall([
-    checkEmailExist,
-    createUser,
-    generateToken
-  ], function (err, result) {
-    if (err) {
-      res.json({
-        responseStatus: false,
-        error: err
-      })
-    } else {
-      res.json({
-        responseStatus: true,
-        token: result
-      })
-    }
-  });
-
-  function checkEmailExist(callback) {
-    bigCommerce.get('/customers?email=' + req.body.email)
-      .then(customerInfo => {
-        if (customerInfo) {
-          callback("Email exist already")
-        } else {
-          callback(null, "")
-        }
-      })
-      .catch(err => {
-        callback(err)
-      })
-  }
-
-  function createUser(result, callback) {
-    bigCommerce.post('/customers', {
-        first_name: req.body.firstName,
-        last_name: req.body.lastName,
-        email: req.body.email,
-        phone: req.body.phoneNumber,
-        _authentication: {
-          password: req.body.password,
-          password_confirmation: req.body.confirmPassword
-        }
-      }).then(customerInfo => {
-        console.log(customerInfo)
-        callback(null, customerInfo)
-      })
-      .catch(err => {
-        if (err)
-          callback(err)
-      })
-  }
-
-  function generateToken(customerInfo, callback) {
-    jwt.sign({
-      customerId: customerInfo.id
-    }, config.jwtSecret, function (err, token) {
-      if (err) {
-        callback(err)
-      } else {
-        callback(null, token)
-      }
+  db = req.db
+  db.collection('users').save(req.body).then(result => {
+    res.json({
+      success: true
     })
-  }
+  })
 })
 
 router.post('/login', (req, res, next) => {

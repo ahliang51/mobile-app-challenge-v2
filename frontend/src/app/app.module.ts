@@ -16,6 +16,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faWpforms } from '@fortawesome/free-brands-svg-icons';
 import { OperatorHomeComponent } from './components/operator-home/operator-home.component';
 import { OperatorHomeComponentsModule } from './components/operator-home/operator-home.module';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 library.add(faWpforms);
 
@@ -27,6 +29,9 @@ library.add(faWpforms);
     AppRoutingModule,
     FontAwesomeModule,
     OperatorHomeComponentsModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     StatusBar,

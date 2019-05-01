@@ -28,13 +28,17 @@ let port = process.env.PORT || 3000
 app.use(bodyParser.json())
 app.use(function (req, res, next) {
   req.db = db
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
   next()
 })
 
 // // Import Routes
 let addressBook = require('./routes/address-book')
+let auth = require('./routes/auth')
 // Routes
 app.use('/address-book', addressBook)
+app.use('/auth', auth)
 
 // Start the server only the connection to database is successful
 app.listen(port, () => {

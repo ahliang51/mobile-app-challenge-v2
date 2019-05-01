@@ -1,75 +1,92 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-back-button defaultHref="login"></ion-back-button>
       <ion-title>Register</ion-title>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
+  <form [formGroup]="registration" (ngSubmit)="registrationForm()">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">First Name</ion-label>
+            <ion-input type="text" formControlName="firstName"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Last Name</ion-label>
+            <ion-input formControlName="lastName"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
         <ion-item>
-          <ion-label position="stacked">First Name</ion-label>
-          <ion-input></ion-input>
+          <ion-label position="stacked">Username</ion-label>
+          <ion-input formControlName="userName"></ion-input>
         </ion-item>
-      </ion-col>
-      <ion-col>
+      </ion-row>
+      <ion-row>
         <ion-item>
-          <ion-label position="stacked">Last Name</ion-label>
-          <ion-input></ion-input>
+          <ion-label position="stacked">Password</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
         </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="stacked">Rank</ion-label>
-          <ion-select value="0.5" [interfaceOptions]="rankOptions">
-            <!-- <ion-select-option value="0.5">0.5</ion-select-option> -->
-            <!-- <ion-select-option value="1">1</ion-select-option> -->
-            <!-- <ion-select-option value="1.5">1.5</ion-select-option> -->
-            <!-- <ion-select-option value="2">2</ion-select-option> -->
-            <ion-select-option *ngFor="let rank of rankAppointment" value="rank">{{rank}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-label position="stacked">Unit</ion-label>
-          <ion-input></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-item>
-    <ion-label position="stacked">Company</ion-label>
-    <ion-input></ion-input>
-  </ion-item>
-  <ion-list>
-    <ion-radio-group>
-      <ion-list-header>
-        <ion-label>Appointment</ion-label>
-      </ion-list-header>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Rank</ion-label>
+            <ion-select [interfaceOptions]="rankOptions" formControlName="rank">
+              <ion-select-option *ngFor="let rank of rankAppointment" [value]="rank">{{rank}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Unit</ion-label>
+            <ion-select interface="action-sheet" #unit (ionChange)="onUnitChange(unit.value)" formControlName="unit">
+              <ion-select-option *ngFor="let unit of units; let i = index" [value]="unit">{{unit}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-item>
+      <ion-label position="stacked">Company</ion-label>
+      <ion-select interface="action-sheet" formControlName="company">
+        <ion-select-option *ngFor="let company of companys; let i = index" [value]="company">{{company}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-list>
+      <ion-radio-group formControlName="appointment">
+        <ion-list-header>
+          <ion-label>Appointment</ion-label>
+        </ion-list-header>
 
-      <ion-item>
-        <ion-label>Commander</ion-label>
-        <ion-radio slot="start" value="biff" checked></ion-radio>
-      </ion-item>
+        <ion-item>
+          <ion-label>Commander</ion-label>
+          <ion-radio slot="start" value="commander" checked></ion-radio>
+        </ion-item>
 
-      <ion-item>
-        <ion-label>Operator</ion-label>
-        <ion-radio slot="start" value="buford"></ion-radio>
-      </ion-item>
-    </ion-radio-group>
-  </ion-list>
+        <ion-item>
+          <ion-label>Operator</ion-label>
+          <ion-radio slot="start" value="operator"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+  </form>
 </ion-content>
 
 
 <ion-footer no-border>
   <ion-toolbar>
-    <ion-button color="primary" large expand="full" (click)="login()">Submit</ion-button>
+    <ion-button color="primary" large expand="full" (click)="registrationForm()" [disabled]="!registration.valid">Submit
+    </ion-button>
   </ion-toolbar>
 </ion-footer>
