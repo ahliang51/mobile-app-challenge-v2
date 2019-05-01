@@ -50,4 +50,16 @@ router.post('/retrieve-off-balance', (req, res, next) => {
   })
 })
 
+router.post('/update-off-balance', (req, res, next) => {
+  db = req.db
+  console.log(req.body)
+  db.collection('users').updateOne({ _id: ObjectId(req.body.userId) }, {
+    $inc: {
+      offBalance: parseInt(req.body.numberOfOff)
+    }
+  }).then(result => {
+    console.log(result)
+  })
+})
+
 module.exports = router

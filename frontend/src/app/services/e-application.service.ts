@@ -24,4 +24,10 @@ export class EApplicationService {
       return result;
     }));
   }
+
+  updateOffBalance(userInfo): Observable<any> {
+    return this.http.post(global.apiUrl + '/e-application/update-off-balance', userInfo).pipe(map(result => {
+      return result;
+    }));
+  }
 }
