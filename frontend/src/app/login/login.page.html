@@ -2,29 +2,13 @@
   <div class="user-input">
     <ion-item>
       <ion-label position="stacked" required="true">Username</ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="userName"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked" required="true">Password</ion-label>
-      <ion-input></ion-input>
+      <ion-input type="password" [(ngModel)]="password"></ion-input>
     </ion-item>
   </div>
-  <ion-list>
-    <ion-radio-group no-lines>
-      <ion-list-header>
-        <ion-label>Select Appointment</ion-label>
-      </ion-list-header>
-      <ion-item>
-        <ion-label>Commander</ion-label>
-        <ion-radio slot="start" value="commander" checked></ion-radio>
-      </ion-item>
-      <ion-item>
-        <ion-label>Operator</ion-label>
-        <ion-radio slot="start" value="operator"></ion-radio>
-      </ion-item>
-    </ion-radio-group>
-  </ion-list>
-
 </ion-content>
 
 <ion-footer no-border>

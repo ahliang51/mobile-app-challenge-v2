@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-
-import * as global from '../global-variable';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
+import * as global from '../global-variable';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,12 @@ export class RegistrationService {
 
   signUp(userInfo): Observable<any> {
     return this.http.post(global.apiUrl + '/auth/sign-up', userInfo).pipe(map(result => {
+      return result;
+    }));
+  }
+
+  login(userInfo): Observable<any> {
+    return this.http.post(global.apiUrl + '/auth/login', userInfo).pipe(map(result => {
       return result;
     }));
   }

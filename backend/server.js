@@ -36,9 +36,11 @@ app.use(function (req, res, next) {
 // // Import Routes
 let addressBook = require('./routes/address-book')
 let auth = require('./routes/auth')
+let eApplication = require('./routes/e-application')
 // Routes
 app.use('/address-book', addressBook)
 app.use('/auth', auth)
+app.use('/e-application', eApplication)
 
 // Start the server only the connection to database is successful
 app.listen(port, () => {

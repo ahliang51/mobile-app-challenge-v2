@@ -30,14 +30,14 @@ export class RegisterPage implements OnInit {
     public router: Router,
     public formBuilder: FormBuilder) {
     this.registration = this.formBuilder.group({
-      firstName: ['asd', Validators.required],
-      lastName: ['asd', Validators.required],
-      userName: ['asd', Validators.required],
-      password: ['asd', Validators.required],
-      rank: ['MAJ', Validators.required],
-      unit: ['3DA', Validators.required],
-      company: ['ALPHA', Validators.required],
-      appointment: ['commander', Validators.required]
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      userName: ['', Validators.required],
+      password: ['123', Validators.required],
+      rank: ['', Validators.required],
+      unit: ['', Validators.required],
+      company: ['', Validators.required],
+      appointment: ['operator', Validators.required]
     });
   }
 
@@ -59,10 +59,8 @@ export class RegisterPage implements OnInit {
   }
 
   registrationForm() {
-    console.log(this.registration.value);
     this.presentLoading();
     this.registrationService.signUp(this.registration.value).subscribe(result => {
-      console.log(result);
       if (result.success) {
         this.presentToast();
         this.loadingController.dismiss();

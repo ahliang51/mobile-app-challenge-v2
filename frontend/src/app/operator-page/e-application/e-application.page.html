@@ -10,7 +10,7 @@
 <ion-content>
   <ion-item>
     <ion-label>Number of Offs</ion-label>
-    <div slot="end">2</div>
+    <div slot="end">{{offBalance}}</div>
   </ion-item>
   <ion-item>
     <ion-label>Start Date</ion-label>
@@ -24,8 +24,8 @@
   </ion-item>
   <ion-item>
     <ion-label text-wrap>Approving Commander</ion-label>
-    <ion-select value="commanderOptions[0]" [interfaceOptions]="approvingCommanderOptions" interface="action-sheet">
-      <ion-select-option *ngFor="let name of commanderOptions" [value]="name">{{name}}</ion-select-option>
+    <ion-select value="commandersArray[0]" [interfaceOptions]="approvingCommanderOptions" interface="action-sheet">
+      <ion-select-option *ngFor="let name of commandersArray" [value]="name">{{name}}</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>

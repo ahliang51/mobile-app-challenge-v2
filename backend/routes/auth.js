@@ -15,69 +15,23 @@ router.post('/sign-up', (req, res, next) => {
 })
 
 router.post('/login', (req, res, next) => {
-  let bigCommerce = req.bigCommerce
-  let jwt = req.jwt
-
-  async.waterfall([
-    checkEmailExist,
-    checkPassword,
-    generateToken
-  ], function (err, result) {
-    if (err) {
+  db = req.db
+  db.collection('users').findOne({
+    userName: req.body.username
+  }).then(result => {
+    if (result.password === req.body.password) {
       res.json({
-        responseStatus: false,
-        error: err
+        success: true,
+        userId: result._id,
+        appointment: result.appointment
       })
     } else {
       res.json({
-        responseStatus: true,
-        token: result
+        sucess: false,
+        error: 'Incorrect credentials'
       })
     }
   })
-
-  function checkEmailExist(callback) {
-    bigCommerce.get('/customers?email=' + req.body.email)
-      .then(customerInfo => {
-        if (customerInfo) {
-          console.log(customerInfo)
-          callback(null, customerInfo)
-        } else {
-          callback("There are no such email!")
-        }
-      })
-      .catch(err => {
-        console.log(err)
-        callback(err)
-      })
-  }
-
-  function checkPassword(customerInfo, callback) {
-    bigCommerce.post('/customers/' + customerInfo[0].id + "/validate", {
-        "password": req.body.password
-      })
-      .then(result => {
-        if (result.success) {
-          callback(null, customerInfo)
-        } else {
-          callback("Password is wrong")
-        }
-        console.log(result)
-      })
-  }
-
-  function generateToken(customerInfo, callback) {
-    console.log(customerInfo)
-    jwt.sign({
-      customerId: customerInfo[0].id
-    }, config.jwtSecret, function (err, token) {
-      if (err) {
-        callback(err)
-      } else {
-        callback(null, token)
-      }
-    })
-  }
 })
 
 router.post('/authenticated', (req, res, next) => {

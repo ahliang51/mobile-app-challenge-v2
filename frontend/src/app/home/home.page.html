@@ -34,7 +34,6 @@
 </ion-header>
 
 <ion-content>
-  <app-operator-home>
-  </app-operator-home>
-  <!-- <app-commander-home></app-commander-home> -->
+  <app-operator-home *ngIf="appointment == 'operator'"></app-operator-home>
+  <app-commander-home *ngIf="appointment == 'commander'"></app-commander-home>
 </ion-content>
