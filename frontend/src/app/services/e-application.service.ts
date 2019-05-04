@@ -30,4 +30,22 @@ export class EApplicationService {
       return result;
     }));
   }
+
+  applicationOfOff(userInfo): Observable<any> {
+    return this.http.post(global.apiUrl + '/e-application/apply-off', userInfo).pipe(map(result => {
+      return result;
+    }));
+  }
+
+  retrievePendingOff(userInfo): Observable<any> {
+    return this.http.post(global.apiUrl + '/e-application/retrieve-pending-off', userInfo).pipe(map(result => {
+      return result;
+    }));
+  }
+
+  approveOff(userInfo): Observable<any> {
+    return this.http.post(global.apiUrl + '/e-application/approve-off', userInfo).pipe(map(result => {
+      return result;
+    }));
+  }
 }

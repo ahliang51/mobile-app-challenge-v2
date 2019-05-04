@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { EApplicationService } from 'src/app/services/e-application.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-commander-grant',
@@ -10,7 +11,7 @@ import { EApplicationService } from 'src/app/services/e-application.service';
 export class CommanderGrantComponent implements OnInit {
 
   operatorConfiguration = {
-    header: 'Select Commander'
+    header: 'Select Operator'
   };
 
   customActionSheetOptions: any = {
@@ -23,6 +24,7 @@ export class CommanderGrantComponent implements OnInit {
   operatorIndex;
 
   constructor(public eApplicationService: EApplicationService,
+    public toastController: ToastController,
     public storage: Storage, ) { }
 
   ngOnInit() {
@@ -46,7 +48,18 @@ export class CommanderGrantComponent implements OnInit {
       userId: this.operatorArray[this.operatorIndex]._id,
       numberOfOff: this.numberOfDays
     }).subscribe(result => {
-      console.log(result);
+      if (result.success) {
+        this.presentToast('Successully granted Off');
+      }
     });
+  }
+
+  async presentToast(message) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom'
+    });
+    toast.present();
   }
 }

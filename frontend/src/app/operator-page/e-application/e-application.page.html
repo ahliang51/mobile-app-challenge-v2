@@ -8,41 +8,47 @@
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-label>Number of Offs</ion-label>
-    <div slot="end">{{offBalance}}</div>
-  </ion-item>
-  <ion-item>
-    <ion-label>Start Date</ion-label>
-    <ion-datetime display-format="DD/MM/YYYY" min="2019" picker-format="DD MMM YYYY" [(ngModel)]="startDate">
-    </ion-datetime>
-  </ion-item>
-  <ion-item>
-    <ion-label>End Date</ion-label>
-    <ion-datetime display-format="DD/MM/YYYY" min="2019" picker-format="DD MMM YYYY" [(ngModel)]="endDate">
-    </ion-datetime>
-  </ion-item>
-  <ion-item>
-    <ion-label text-wrap>Approving Commander</ion-label>
-    <ion-select value="commandersArray[0]" [interfaceOptions]="approvingCommanderOptions" interface="action-sheet">
-      <ion-select-option *ngFor="let name of commandersArray" [value]="name">{{name}}</ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ion-item>
-    <ion-label>Number of Days</ion-label>
-    <ion-select value="0.5" [interfaceOptions]="customActionSheetOptions" interface="action-sheet">
-      <ion-select-option value="0.5">0.5</ion-select-option>
-      <ion-select-option value="1">1</ion-select-option>
-      <ion-select-option value="1.5">1.5</ion-select-option>
-      <ion-select-option value="2">2</ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ion-item>
-    <ion-input placeholder="Reason"></ion-input>
-  </ion-item>
+  <form [formGroup]="eApplication">
+    <ion-item>
+      <ion-label>Number of Offs</ion-label>
+      <div slot="end">{{offBalance}}</div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Start Date</ion-label>
+      <ion-datetime display-format="DD/MM/YYYY" min="2019" picker-format="DD MMM YYYY" formControlName="startDate">
+      </ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>End Date</ion-label>
+      <ion-datetime display-format="DD/MM/YYYY" min="2019" picker-format="DD MMM YYYY" formControlName="endDate">
+      </ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap>Approving Commander</ion-label>
+      <ion-select value="commandersSelection[0]" [interfaceOptions]="approvingCommanderOptions"
+        formControlName="approvingCommander" interface="action-sheet">
+        <ion-select-option *ngFor="let name of commandersSelection; let i = index" [value]="i">{{name | uppercase}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Number of Days</ion-label>
+      <ion-select value="0.5" [interfaceOptions]="customActionSheetOptions" formControlName="numberOfDays" #days
+        (ionChange)="daysChange(days.value)" interface="action-sheet">
+        <ion-select-option value="0.5">0.5</ion-select-option>
+        <ion-select-option value="1">1</ion-select-option>
+        <ion-select-option value="1.5">1.5</ion-select-option>
+        <ion-select-option value="2">2</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-input placeholder="Reason" formControlName="reason"></ion-input>
+    </ion-item>
+  </form>
 </ion-content>
 <ion-footer no-border>
   <ion-toolbar>
-    <ion-button expand="block" fill="solid" class="submit">Submit</ion-button>
+    <ion-button expand="block" fill="solid" class="submit" (click)="eApplicationForm()"
+      [disabled]="!eApplication.valid">Submit</ion-button>
   </ion-toolbar>
 </ion-footer>

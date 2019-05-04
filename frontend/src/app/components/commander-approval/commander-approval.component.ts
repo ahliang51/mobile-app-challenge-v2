@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { EApplicationService } from 'src/app/services/e-application.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-commander-approval',
@@ -7,15 +9,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommanderApprovalComponent implements OnInit {
 
-  personnelArray = [
-    { name: 'LTA Hosehbo', remarks: 'On Off', dateFrom: '11/2/2019', dateTo: '13/2/2019', numberOfDays: 2 },
-    { name: 'LTA Hosehliao', remarks: '', dateFrom: '11/2/2019', dateTo: '13/2/2019', numberOfDays: 2 },
-    { name: 'LTA Hosehkao', remarks: '', dateFrom: '11/2/2019', dateTo: '13/2/2019', numberOfDays: 2 },
-    { name: 'LTA Hosehboliao', remarks: 'On MA', dateFrom: '11/2/2019', dateTo: '13/2/2019', numberOfDays: 2 }
-  ];
+  personnelArray = [];
+  userId;
 
-  constructor() { }
+  constructor(public eApplicationService: EApplicationService,
+    public storage: Storage) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.storage.get('userId').then(userId => {
+      this.userId = userId;
+      this.eApplicationService.retrievePendingOff({
+        userId: userId
+      }).subscribe(result => {
+        console.log(result)
+        this.personnelArray = result;
+      })
+    })
+  }
+
+  approve(index) {
+    this.eApplicationService.approveOff({
+      userId: this.userId,
+      document: this.personnelArray[index]
+    }).subscribe(result => {
+      console.log(result)
+    })
+  }
 
 }

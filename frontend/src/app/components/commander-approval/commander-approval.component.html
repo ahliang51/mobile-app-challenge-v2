@@ -1,19 +1,22 @@
 <ion-list>
- <ion-item *ngFor="let personnel of personnelArray">
-  <ion-label text-wrap>
-   <ion-text>
-    <h3>{{personnel.name}}</h3>
-   </ion-text>
-   <ion-text>
-    <p>Date From : {{personnel.dateFrom}}</p>
-   </ion-text>
-   <ion-text>
-    <p>Date To : {{personnel.dateTo}}</p>
-   </ion-text>
-   <ion-text>
-    <p>Number of Days : {{personnel.numberOfDays}}</p>
-   </ion-text>
-  </ion-label>
-  <ion-button slot="end" shape="block" fill="outline">Approve</ion-button>
- </ion-item>
+  <ion-item *ngFor="let personnel of personnelArray; let i = index">
+    <ion-label text-wrap>
+      <ion-text>
+        <h3>{{personnel.name | uppercase}}</h3>
+      </ion-text>
+      <ion-text>
+        <p>Date from : {{personnel.startDate | date : 'dd/MM/yyyy'}}</p>
+      </ion-text>
+      <ion-text>
+        <p>Date to : {{personnel.endDate | date : 'dd/MM/yyyy'}}</p>
+      </ion-text>
+      <ion-text>
+        <p>Number of Days : {{personnel.numberOfDays}}</p>
+      </ion-text>
+      <ion-text>
+        <p>Reason : {{personnel.reason}}</p>
+      </ion-text>
+    </ion-label>
+    <ion-button slot="end" shape="block" fill="outline" (click)="approve(i)">Approve</ion-button>
+  </ion-item>
 </ion-list>
