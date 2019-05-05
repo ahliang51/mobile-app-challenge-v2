@@ -13,33 +13,31 @@
       Indentation of Ration Week {{nextWeekNumber}}
     </ion-label>
   </ion-item>
-  <ion-item *ngFor="let day of daysArray; let i = index">
-    <ion-grid>
-      <ion-row justify-content-center>
-        <ion-label text-wrap>
-          {{day}}
-        </ion-label>
-      </ion-row>
-      <ion-row text-center>
-        <ion-col>
-          <ion-label>Breakfast</ion-label>
-          <ion-checkbox value="breakfast" checked></ion-checkbox>
-        </ion-col>
-        <ion-col>
-          <ion-label>Lunch</ion-label>
-          <ion-checkbox value="lunch" checked>Lunch</ion-checkbox>
-        </ion-col>
-        <ion-col>
-          <ion-label>Dinner</ion-label>
-          <ion-checkbox value="dinner" checked>Dinner</ion-checkbox>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-item>
+  <div *ngIf="!rationExist">
+    <ion-item *ngFor="let day of viewDaysArray; let i = index">
+      <ion-label text-wrap>
+        {{day}}
+      </ion-label>
+      <ion-select multiple="true" [(ngModel)]="rationArray[i]">
+        <ion-select-option value="breakfast" selected>Breakfast</ion-select-option>
+        <ion-select-option value="lunch" selected>Lunch</ion-select-option>
+        <ion-select-option value="dinner" selected>Dinner</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+  <div *ngIf="rationExist">
+    <ion-label>
+      You have already indented rations!
+    </ion-label>
+  </div>
+
+
 </ion-content>
 
 <ion-footer no-border>
-  <ion-toolbar>
-    <ion-button expand="block" fill="solid" class="submit">Submit Ration</ion-button>
-  </ion-toolbar>
+  <div *ngIf="!rationExist">
+    <ion-toolbar>
+      <ion-button expand="block" fill="solid" class="submit" (click)="submit()">Submit Ration</ion-button>
+    </ion-toolbar>
+  </div>
 </ion-footer>
