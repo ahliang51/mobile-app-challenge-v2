@@ -95,8 +95,8 @@ export class EApplicationPage implements OnInit {
   eApplicationForm() {
     this.eApplication.value.applicantId = this.userId;
     this.eApplication.value.approvingCommander = this.commandersArray[this.eApplication.value.approvingCommander]._id;
-    this.eApplication.value.startDate = moment(this.eApplication.value.startDate).toISOString();
-    this.eApplication.value.endDate = moment(this.eApplication.value.endDate).toISOString();
+    this.eApplication.value.startDate = new Date(this.eApplication.value.startDate);
+    this.eApplication.value.endDate = new Date(this.eApplication.value.endDate);
     console.log(this.eApplication.value);
     this.eApplicationService.applicationOfOff(this.eApplication.value).subscribe(result => {
       console.log(result)

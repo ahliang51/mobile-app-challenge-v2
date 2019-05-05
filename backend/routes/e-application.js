@@ -13,13 +13,12 @@ router.post('/retrieve-personnel', (req, res, next) => {
   async.waterfall([retrieveUserInfo, retrieveCommanders], (error, commanders) => {
     if (error) {
       res.json(error)
-    }
-    else {
+    } else {
       res.json(commanders)
     }
   })
 
-  function retrieveUserInfo(callback) {
+  function retrieveUserInfo (callback) {
     db.collection('users').findOne({
       _id: ObjectId(req.body.userId)
     }).then(result => {
@@ -30,7 +29,7 @@ router.post('/retrieve-personnel', (req, res, next) => {
     })
   }
 
-  function retrieveCommanders(userInfo, callback) {
+  function retrieveCommanders (userInfo, callback) {
     db.collection('users').find({
       unit: userInfo.unit,
       company: userInfo.company,
@@ -75,14 +74,15 @@ router.post('/apply-off', (req, res, next) => {
     }
   })
 
-  function insertPendingOff(callback) {
+  function insertPendingOff (callback) {
     req.body.approvalStatus = false
+    console.log(req.body)
     db.collection('e-application-record').insertOne(req.body).then(result => {
-      callback(null, '')
+      // callback(null, '')
     })
   }
 
-  function updateOffBalance(callback) {
+  function updateOffBalance (callback) {
     db.collection('users').updateOne({ _id: ObjectId(req.body.applicantId) }, {
       $inc: {
         offBalance: -(parseFloat(req.body.numberOfDays)),
@@ -105,7 +105,7 @@ router.post('/retrieve-pending-off', (req, res, next) => {
     }
   })
 
-  function retrievePersonnel(callback) {
+  function retrievePersonnel (callback) {
     db.collection('e-application-record').find({
       approvingCommander: req.body.userId,
       approvalStatus: false
@@ -114,7 +114,7 @@ router.post('/retrieve-pending-off', (req, res, next) => {
     })
   }
 
-  function retrievePersonnelInformation(personnelArray, callback) {
+  function retrievePersonnelInformation (personnelArray, callback) {
     async.each(personnelArray, (personnel, callback) => {
       db.collection('users').findOne({ _id: ObjectId(personnel.applicantId) }).then(info => {
         personnel.name = info.rank + ' ' + info.firstName
@@ -142,7 +142,7 @@ router.post('/approve-off', (req, res, next) => {
     }
   })
 
-  function approveOff(callback) {
+  function approveOff (callback) {
     db.collection('e-application-record').updateOne({ _id: ObjectId(req.body.document._id) }, {
       $set: {
         approvalStatus: true
@@ -153,7 +153,7 @@ router.post('/approve-off', (req, res, next) => {
       })
   }
 
-  function updatePending(result, callback) {
+  function updatePending (result, callback) {
     db.collection('users').updateOne({ _id: ObjectId(req.body.document.applicantId) }, {
       $inc: {
         pendingOffBalance: -(parseFloat(req.body.document.numberOfDays))
