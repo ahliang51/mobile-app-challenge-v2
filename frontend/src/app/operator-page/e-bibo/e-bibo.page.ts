@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Platform, Events, LoadingController } from '@ionic/angular';
+import { Platform, Events, LoadingController, ToastController } from '@ionic/angular';
 import { Geofence } from '@ionic-native/geofence';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { EBiboService } from 'src/app/services/e-bibo.service';
+import { Storage } from '@ionic/storage';
 
 
 declare var google;
@@ -23,12 +25,17 @@ export class EbiboPage implements OnInit {
   address: string;
   circle: any;
   radius = 50;
+  haveBookIn: boolean;
+  userId;
 
 
   constructor(public geolocation: Geolocation,
     public platform: Platform,
     public events: Events,
-    public loadingController: LoadingController
+    public toastController: ToastController,
+    public loadingController: LoadingController,
+    public eBiboService: EBiboService,
+    public storage: Storage
   ) {
     this.platform.ready().then(() => {
 
@@ -42,52 +49,51 @@ export class EbiboPage implements OnInit {
     });
   }
 
-  addGeofences() {
-    this.geolocation.getCurrentPosition().then((resp) => {
-      console.log(resp.coords.latitude + ' ' + resp.coords.longitude);
+  addGeofences(latitude, longitude) {
+    const geofence = {
+      id: 'Chong Pang Camp',
+      latitude: latitude,
+      longitude: longitude,
+      radius: this.radius,
+      transitionType: 1,
+      notification: {
+        id: 1,
+        title: 'Chong Pang Camp',
+        text: 'You are near CPC.',
+        openAppOnClick: true
+      }
+    };
 
-      const geofence = {
-        id: 'Chong Pang Camp',
-        latitude: resp.coords.latitude,
-        longitude: resp.coords.longitude,
-        radius: this.radius,
-        transitionType: 1,
-        notification: {
-          id: 1,
-          title: 'Chong Pang Camp',
-          text: 'You are near CPC.',
-          openAppOnClick: true
-        }
-      };
+    Geofence.addOrUpdate(geofence).then(
+      () => console.log('Geofence added'),
+      (err) => console.log(err)
+    );
 
-      Geofence.addOrUpdate(geofence).then(
-        () => console.log('Geofence added'),
-        (err) => console.log(err)
-      );
-
-      // tslint:disable-next-line:no-shadowed-variable
-      Geofence.onTransitionReceived().subscribe(resp => {
-        this.events.publish('transition:recieved');
-        console.log(resp);
-      });
-
-    }).catch((error) => {
-      console.log('Error getting location', error);
+    // tslint:disable-next-line:no-shadowed-variable
+    Geofence.onTransitionReceived().subscribe(resp => {
+      this.events.publish('transition:recieved');
+      console.log(resp);
     });
+
   }
-
-
 
   ngOnInit() {
     this.loadMap();
+    this.storage.get('userId').then(userId => {
+      this.userId = userId;
+      this.eBiboService.checkBiboStatus({ userId: userId }).subscribe(result => {
+        console.log(result)
+        if (result.bookOutDateTime) {
+          this.haveBookIn = false;
+        } else {
+          this.haveBookIn = true;
+        }
+      })
+    })
   }
 
   loadMap() {
-    this.loadingController.create({
-      message: 'Loading Map'
-    }).then((res) => {
-      res.present();
-    });
+    this.presentLoading();
     this.geolocation.getCurrentPosition().then((resp) => {
       const latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
       const mapOptions = {
@@ -99,7 +105,7 @@ export class EbiboPage implements OnInit {
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
       this.map.addListener('tilesloaded', () => {
-        this.addGeofences();
+        this.addGeofences(resp.coords.latitude, resp.coords.longitude);
         this.loadingController.dismiss();
         this.showMapMarker = true;
       });
@@ -139,8 +145,49 @@ export class EbiboPage implements OnInit {
       })
 
     }).catch((error) => {
+      this.loadingController.dismiss();
       console.log('Error getting location', error);
     });
   }
 
+
+  bookIn() {
+    this.presentLoading();
+    this.eBiboService.bookIn({ userId: this.userId }).subscribe(result => {
+      console.log(result)
+      this.loadingController.dismiss();
+      if (result) {
+        this.presentToast('You have booked in!');
+        this.haveBookIn = true;
+      }
+    })
+  }
+
+  bookOut() {
+    this.presentLoading();
+    this.eBiboService.bookOut({ userId: this.userId }).subscribe(result => {
+      console.log(result)
+      this.loadingController.dismiss();
+      if (result) {
+        this.presentToast('You have booked out!');
+        this.haveBookIn = false;
+      }
+    })
+  }
+
+  async presentToast(message) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Loading',
+    });
+    await loading.present();
+  }
 }

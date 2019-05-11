@@ -21,6 +21,7 @@
 </ion-content>
 <ion-footer no-border>
   <ion-toolbar>
-    <ion-button expand="block" fill="solid" class="submit">Book In</ion-button>
+    <ion-button expand="block" fill="solid" class="submit" (click)="bookIn()" *ngIf="!haveBookIn">Book In</ion-button>
+    <ion-button expand="block" fill="solid" class="submit" (click)="bookOut()" *ngIf="haveBookIn">Book Out</ion-button>
   </ion-toolbar>
 </ion-footer>

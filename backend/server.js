@@ -39,12 +39,16 @@ let auth = require('./routes/auth')
 let eApplication = require('./routes/e-application')
 let eRation = require('./routes/e-ration')
 let eParade = require('./routes/e-parade')
+let eBibo = require('./routes/e-bibo')
 // Routes
 app.use('/address-book', addressBook)
 app.use('/auth', auth)
 app.use('/e-application', eApplication)
 app.use('/e-ration', eRation)
 app.use('/e-parade', eParade)
+app.use('/e-bibo', eBibo)
+
+app.get('/test', (req, res) => res.send('Hello World!'))
 
 // Start the server only the connection to database is successful
 app.listen(port, () => {
