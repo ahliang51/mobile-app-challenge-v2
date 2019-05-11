@@ -4,6 +4,8 @@ import { EApplicationService } from 'src/app/services/e-application.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import * as moment from 'moment';
+import { LoadingController, ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-e-application',
@@ -33,6 +35,9 @@ export class EApplicationPage implements OnInit {
 
   constructor(public storage: Storage,
     public eApplicationService: EApplicationService,
+    public toastController: ToastController,
+    public loadingController: LoadingController,
+    public router: Router,
     public formBuilder: FormBuilder) {
     this.eApplication = this.formBuilder.group({
       startDate: [this.startDate, Validators.required],
@@ -44,6 +49,7 @@ export class EApplicationPage implements OnInit {
   }
 
   ngOnInit() {
+    this.presentLoading();
     this.storage.get('userId').then(userId => {
       this.userId = userId;
       this.eApplicationService.retrievePersonnel({
@@ -57,6 +63,7 @@ export class EApplicationPage implements OnInit {
       });
 
       this.eApplicationService.retrieveOffBalance(userId).subscribe(balance => {
+        this.loadingController.dismiss();
         if (balance.offBalance) {
           this.offBalance = balance.offBalance;
         } else {
@@ -93,6 +100,7 @@ export class EApplicationPage implements OnInit {
 
 
   eApplicationForm() {
+    this.presentLoading();
     this.eApplication.value.applicantId = this.userId;
     this.eApplication.value.approvingCommander = this.commandersArray[this.eApplication.value.approvingCommander]._id;
     this.eApplication.value.startDate = new Date(this.eApplication.value.startDate);
@@ -100,23 +108,28 @@ export class EApplicationPage implements OnInit {
     console.log(this.eApplication.value);
     this.eApplicationService.applicationOfOff(this.eApplication.value).subscribe(result => {
       console.log(result)
+      this.loadingController.dismiss();
+      if (result.success) {
+        this.presentToast();
+        this.router.navigateByUrl('/home');
+      }
     })
   }
 
 
-  // validateDate(startDate, endDate) {
-  //   const tempStart = moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ');
-  //   const tempEnd = moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ');
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Successfully Applied',
+      duration: 2000,
+      position: 'top'
+    });
+    toast.present();
+  }
 
-  //   console.log(tempStart);
-  //   console.log(tempEnd);
-
-  //   console.log(moment(startDate).isBefore(tempEnd, 'day'));
-
-  //   if (moment(startDate).isSameOrBefore(tempEnd, 'day')) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Loading',
+    });
+    await loading.present();
+  }
 }

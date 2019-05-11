@@ -12,7 +12,7 @@
     <ion-item *ngFor="let personnel of personnelArray">
       <ion-label text-wrap>
         <ion-text>
-          <h3>{{personnel.name}}</h3>
+          <h3>{{personnel.name | uppercase}}</h3>
         </ion-text>
         <ion-text>
           <p>{{personnel.reason}}</p>

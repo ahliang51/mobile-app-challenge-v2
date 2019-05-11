@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegistrationService } from '../services/registration.service';
 import { Storage } from '@ionic/storage';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +17,7 @@ export class LoginPage implements OnInit {
   constructor(public router: Router,
     public registrationService: RegistrationService,
     public loadingController: LoadingController,
+    public toastController: ToastController,
     public storage: Storage) { }
 
   ngOnInit() {
@@ -29,11 +30,14 @@ export class LoginPage implements OnInit {
       password: this.password
     }).subscribe(result => {
       console.log(result);
+      this.loadingController.dismiss();
       if (result.success) {
         this.storage.set('userId', result.userId);
         this.storage.set('appointment', result.appointment);
         this.router.navigateByUrl('/home');
-        this.loadingController.dismiss();
+      }
+      else {
+        this.presentToast();
       }
     });
   }
@@ -47,6 +51,15 @@ export class LoginPage implements OnInit {
       message: 'Loading',
     });
     await loading.present();
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Wrong Credentials',
+      duration: 2000,
+      position: 'bottom'
+    });
+    toast.present();
   }
 
 }

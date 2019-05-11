@@ -31,6 +31,12 @@ router.post('/login', (req, res, next) => {
         error: 'Incorrect credentials'
       })
     }
+  }).catch(error => {
+    if (error) {
+      res.json({
+        success: false
+      })
+    }
   })
 })
 

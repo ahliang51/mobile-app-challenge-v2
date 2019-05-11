@@ -3,6 +3,8 @@ import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { EParadeService } from '../services/e-parade.service';
 
 import * as moment from 'moment';
+import { Router } from '@angular/router';
+import { LoadingController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-e-parade-state',
@@ -17,18 +19,23 @@ export class EParadeStatePage implements OnInit {
 
   personnelArray = [];
 
-  constructor(public eParadeService: EParadeService) { }
+  constructor(public eParadeService: EParadeService,
+    public toastController: ToastController,
+    public loadingController: LoadingController,
+    public router: Router, ) { }
 
   ngOnInit() {
   }
 
   onDateChanged() {
+    this.presentLoading();
     console.log(this.date)
     console.log(moment(this.date).toISOString())
     this.eParadeService.retrieveParadeState({
       date: new Date(this.date)
     }).subscribe(result => {
       console.log(result)
+      this.loadingController.dismiss();
       this.personnelArray = result;
     })
     // this.personnelArray = [
@@ -37,6 +44,22 @@ export class EParadeStatePage implements OnInit {
     //   { name: 'LTA Hosehkao', present: true, remarks: '' },
     //   { name: 'LTA Hosehboliao', present: false, remarks: 'On MA' }
     // ];
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Successfully Applied',
+      duration: 2000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Loading',
+    });
+    await loading.present();
   }
 
 }

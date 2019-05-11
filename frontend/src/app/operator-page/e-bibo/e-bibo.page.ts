@@ -22,6 +22,7 @@ export class EbiboPage implements OnInit {
   map: any;
   address: string;
   circle: any;
+  radius = 50;
 
 
   constructor(public geolocation: Geolocation,
@@ -49,8 +50,8 @@ export class EbiboPage implements OnInit {
         id: 'Chong Pang Camp',
         latitude: resp.coords.latitude,
         longitude: resp.coords.longitude,
-        radius: 100,
-        transitionType: 3,
+        radius: this.radius,
+        transitionType: 1,
         notification: {
           id: 1,
           title: 'Chong Pang Camp',
@@ -68,7 +69,6 @@ export class EbiboPage implements OnInit {
       Geofence.onTransitionReceived().subscribe(resp => {
         this.events.publish('transition:recieved');
         console.log(resp);
-        // this.geolocation.watchPosition
       });
 
     }).catch((error) => {
@@ -107,7 +107,7 @@ export class EbiboPage implements OnInit {
       this.circle = new google.maps.Circle({
         center: latLng,
         map: this.map,
-        radius: 50,
+        radius: this.radius,
         strokeColor: 'red',
         strokeOpacity: 0.8,
         strokeWeight: 2,
@@ -115,10 +115,32 @@ export class EbiboPage implements OnInit {
         clickable: true,
       });
 
+      this.geolocation.watchPosition().subscribe(position => {
+        console.log(position)
+
+        const updatedLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        const updatedMapOptions = {
+          center: updatedLatLng,
+          zoom: 16,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        this.map = new google.maps.Map(this.mapElement.nativeElement, updatedMapOptions);
+        this.circle = new google.maps.Circle({
+          center: updatedLatLng,
+          map: this.map,
+          radius: 50,
+          strokeColor: 'red',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: 'red',
+          clickable: true,
+        });
+      })
+
     }).catch((error) => {
       console.log('Error getting location', error);
     });
   }
-
 
 }

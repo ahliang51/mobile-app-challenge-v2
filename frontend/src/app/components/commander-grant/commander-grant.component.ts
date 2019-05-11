@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { EApplicationService } from 'src/app/services/e-application.service';
-import { ToastController } from '@ionic/angular';
+import { ToastController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-commander-grant',
@@ -24,10 +24,12 @@ export class CommanderGrantComponent implements OnInit {
   operatorIndex;
 
   constructor(public eApplicationService: EApplicationService,
+    public loadingController: LoadingController,
     public toastController: ToastController,
     public storage: Storage, ) { }
 
   ngOnInit() {
+    this.presentLoading();
     this.storage.get('userId').then(userId => {
       this.eApplicationService.retrievePersonnel({
         userId: userId,
@@ -35,6 +37,7 @@ export class CommanderGrantComponent implements OnInit {
       }).subscribe(operators => {
         operators.map(operator => {
           console.log(operator)
+          this.loadingController.dismiss();
           this.operatorSelection.push(operator.rank + ' ' + operator.firstName);
           this.operatorArray.push(operator);
         });
@@ -43,12 +46,14 @@ export class CommanderGrantComponent implements OnInit {
   }
 
   onSubmit() {
+    this.presentLoading();
     console.log(this.operatorArray[this.operatorIndex]);
     this.eApplicationService.updateOffBalance({
       userId: this.operatorArray[this.operatorIndex]._id,
       numberOfOff: this.numberOfDays
     }).subscribe(result => {
       if (result.success) {
+        this.loadingController.dismiss();
         this.presentToast('Successully granted Off');
       }
     });
@@ -61,5 +66,12 @@ export class CommanderGrantComponent implements OnInit {
       position: 'bottom'
     });
     toast.present();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Loading',
+    });
+    await loading.present();
   }
 }

@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Storage } from '@ionic/storage';
 import { ERationService } from '../services/e-ration.service';
+import { Router } from '@angular/router';
+import { LoadingController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-e-ration',
@@ -12,7 +14,7 @@ import { ERationService } from '../services/e-ration.service';
 export class ERationPage implements OnInit {
 
   // tslint:disable-next-line:radix
-  nextWeekNumber = parseInt(moment().subtract(3, 'days').format('W')) + 1;
+  nextWeekNumber = parseInt(moment().format('W')) + 1;
   viewDaysArray = [];
   saveDaysArray = [];
   rationArray = [['breakfast', 'lunch', 'dinner'],
@@ -29,10 +31,13 @@ export class ERationPage implements OnInit {
   rationExist: boolean = true;
 
   constructor(public storage: Storage,
+    public toastController: ToastController,
+    public loadingController: LoadingController,
+    public router: Router,
     public eRationService: ERationService) { }
 
   ngOnInit() {
-
+    this.presentLoading();
     this.storage.get('userId').then(userId => {
       this.userId = userId;
       this.eRationService.checkRationSubmitted({
@@ -41,11 +46,15 @@ export class ERationPage implements OnInit {
       }).subscribe(result => {
         console.log(result)
         this.rationExist = result.success
+        this.loadingController.dismiss();
         if (!result.success) {
           getWeekDays(this.viewDaysArray, this.saveDaysArray, this.nextWeekNumber).then(result => {
             this.viewDaysArray = result;
           }
           );
+        }
+        else {
+          this.presentToast('You have already indented rations', 'bottom');
         }
       })
     })
@@ -63,6 +72,7 @@ export class ERationPage implements OnInit {
   }
 
   submit() {
+    this.presentLoading();
     let consolidatedArray = [];
     // tslint:disable-next-line: forin
     for (let day in this.saveDaysArray) {
@@ -76,8 +86,28 @@ export class ERationPage implements OnInit {
       rations: consolidatedArray
     }).subscribe(result => {
       console.log(result)
+      this.loadingController.dismiss();
+      this.presentToast('Successfully indented', 'bottom');
+      this.router.navigateByUrl('/home');
     })
     console.log(consolidatedArray);
+  }
+
+
+  async presentToast(message, position) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: position
+    });
+    toast.present();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Loading',
+    });
+    await loading.present();
   }
 
 }
