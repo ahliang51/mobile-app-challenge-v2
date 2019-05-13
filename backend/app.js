@@ -23,7 +23,7 @@ client.connect(function (err, client) {
 })
 
 // Specifies the port number
-let port = process.env.PORT || 3000
+let port = process.env.PORT || 3100
 // Body Parser Middleware
 app.use(bodyParser.json())
 app.use(function (req, res, next) {
