@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Platform, Events, LoadingController, ToastController } from '@ionic/angular';
+import { Events, LoadingController, ToastController } from '@ionic/angular';
 import { Geofence } from '@ionic-native/geofence';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { EBiboService } from 'src/app/services/e-bibo.service';
@@ -30,23 +30,12 @@ export class EbiboPage implements OnInit {
 
 
   constructor(public geolocation: Geolocation,
-    public platform: Platform,
     public events: Events,
     public toastController: ToastController,
     public loadingController: LoadingController,
     public eBiboService: EBiboService,
     public storage: Storage
   ) {
-    this.platform.ready().then(() => {
-
-      Geofence.initialize().then(
-        () => {
-          console.log('Geofence Plugin Ready');
-          // this.addGeofences();
-        },
-        (err) => console.log(err)
-      );
-    });
   }
 
   addGeofences(latitude, longitude) {

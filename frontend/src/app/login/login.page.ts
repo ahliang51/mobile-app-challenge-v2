@@ -33,8 +33,9 @@ export class LoginPage implements OnInit {
       this.loadingController.dismiss();
       if (result.success) {
         this.storage.set('userId', result.userId);
-        this.storage.set('appointment', result.appointment);
-        this.router.navigateByUrl('/home');
+        this.storage.set('appointment', result.appointment).then(result => {
+          this.router.navigateByUrl('/home');
+        });
       }
       else {
         this.presentToast();
