@@ -27,6 +27,7 @@ export class EbiboPage implements OnInit {
   radius = 50;
   haveBookIn: boolean;
   userId;
+  watchPositionSubscription;
 
 
   constructor(public geolocation: Geolocation,
@@ -109,34 +110,44 @@ export class EbiboPage implements OnInit {
         fillColor: 'red',
         clickable: true,
       });
-
-      this.geolocation.watchPosition().subscribe(position => {
-        console.log(position)
-
-        const updatedLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        const updatedMapOptions = {
-          center: updatedLatLng,
-          zoom: 16,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-
-        this.map = new google.maps.Map(this.mapElement.nativeElement, updatedMapOptions);
-        this.circle = new google.maps.Circle({
-          center: updatedLatLng,
-          map: this.map,
-          radius: 50,
-          strokeColor: 'red',
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: 'red',
-          clickable: true,
-        });
-      })
-
     }).catch((error) => {
       this.loadingController.dismiss();
       console.log('Error getting location', error);
     });
+
+    // this.watchPositionSubscription = this.geolocation.watchPosition().subscribe(position => {
+    //   const updatedLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    //   const updatedMapOptions = {
+    //     center: updatedLatLng,
+    //     zoom: 16,
+    //     mapTypeId: google.maps.MapTypeId.ROADMAP
+    //   };
+
+    //   this.map = new google.maps.Map(this.mapElement.nativeElement, updatedMapOptions);
+
+    //   this.map.addListener('tilesloaded', () => {
+    //     this.addGeofences(position.coords.latitude, position.coords.longitude);
+    //     this.loadingController.dismiss();
+    //     this.showMapMarker = true;
+    //   });
+
+    //   this.circle = new google.maps.Circle({
+    //     center: updatedLatLng,
+    //     map: this.map,
+    //     radius: 50,
+    //     strokeColor: 'red',
+    //     strokeOpacity: 0.8,
+    //     strokeWeight: 2,
+    //     fillColor: 'red',
+    //     clickable: true,
+    //   })
+    // });
+  }
+
+  ionViewWillLeave() {
+    // console.log(this.watchPositionSubscription)
+    // this.watchPositionSubscription.unsubscribe();
+    // console.log('unsubscribed');
   }
 
 

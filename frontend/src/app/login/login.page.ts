@@ -13,6 +13,7 @@ export class LoginPage implements OnInit {
 
   userName;
   password;
+  appointment;
 
   constructor(public router: Router,
     public registrationService: RegistrationService,
@@ -21,6 +22,9 @@ export class LoginPage implements OnInit {
     public storage: Storage) { }
 
   ngOnInit() {
+    this.appointment = 'commander';
+    this.userName = 'commander-alpha'
+    this.password = '123';
   }
 
   login() {
@@ -45,6 +49,15 @@ export class LoginPage implements OnInit {
 
   register() {
     this.router.navigateByUrl('/register');
+  }
+
+  onAppointmentChange(value) {
+    if (value == 'commander') {
+      this.userName = 'commander-alpha'
+    } else {
+      this.userName = 'operator-alpha'
+    }
+
   }
 
   async presentLoading() {
